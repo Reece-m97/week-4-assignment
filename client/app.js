@@ -4,7 +4,9 @@ const messageForm = document.getElementById("messageForm");
 // handle API data
 async function getGuestbook() {
   guestbookContainer.innerHTML = "";
-  const response = await fetch("http://localhost:8080/haunted_guestbook");
+  const response = await fetch(
+    "https://week-4-assignment-server.onrender.com/haunted_guestbook"
+  );
   const guestbook = await response.json();
   console.log(guestbook);
 
@@ -27,11 +29,14 @@ async function handleSubmit(event) {
   const body = Object.fromEntries(formData);
 
   // make a post request
-  const response = await fetch("http://localhost:8080/haunted_guestbook", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    "https://week-4-assignment-server.onrender.com/haunted_guestbook",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }
+  );
 
   console.log(response);
 
