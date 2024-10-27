@@ -41,6 +41,27 @@ app.post("/haunted_guestbook", async function (request, response) {
   }
 });
 
+app.patch("/haunted_guestbook/:id/haunt", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await db.query(
+      "UPDATE haunted_guestbook SET haunts = haunts + 1 WHERE id = $1 RETURNING *",
+      [id]
+    );
+    if (result.rowCount === 0) {
+      res.status(404).json({ success: false, message: "Message not found" });
+    } else {
+      res.json({ success: true, message: "Message haunted successfully!" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while haunting the message.",
+    });
+  }
+});
+
 // start server
 app.listen(8080, function () {
   console.log(`Server is running on port 8080`);
